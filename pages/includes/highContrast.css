@@ -1,0 +1,77 @@
+/* stylesheet for high contrast */
+body {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.navbar {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: #ffffff;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #000000;
+  background-color: #ffffff;
+}
+
+.navbar-default .navbar-brand {
+  color: #ffffff;
+}
+
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+  color: #ffffff;
+  text-decoration: none;
+  background-color: #000000;
+}
+
+a {
+  color: #ffffff;
+}
+
+a:hover {
+  color: #ffffff;
+  background-color: transparent
+}
+
+.table-hover > tbody > tr:hover > td,
+.table-hover > tbody > tr:hover > td > a,
+.table-hover > tbody > tr:hover > th {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+
+.panel {
+  border: 1px solid #ffffff;
+}
+
+.panel-default .panel-body {
+  color: #ffffff;
+  background-color: #000000;
+}
+
+.panel-default .panel-heading {
+  color: #ffffff;
+  background-color: #000000;
+}
+
+.btn-primary {
+  color: #000000;
+  background-color: #ffffff;
+  border-color: #ffffff;
+}
+
+.btn-primary:hover {
+  color: #000000;
+  background-color: #ffffff;
+  border-color: #ffffff;
+}
+
+

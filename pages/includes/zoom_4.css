@@ -1,0 +1,24 @@
+/*stylesheet for zoom level 1 */
+body {
+  padding-top: 200px;
+  font-size: 33px;
+}
+
+
+.navbar-default .navbar-brand {
+  font-size: 36px;
+}
+
+
+.dropdown-menu > li > a {
+  font-size: 33px;
+}
+
+
+h5 {
+  font-size: 35px;
+}
+
+.extra_copies {
+  width: 18%
+}

@@ -1,0 +1,265 @@
+What is LMS?
+===============
+
+LMS is an acronym for Library Management System considering that I set out make one or a close 
+
+parody at least.
+
+I have laid out this document to cover most (if not all) of the assumptions and considerations 
+
+that came into play while developing this application.
+
+I intend to make it bigger, better and more useful so any form of contribution or 
+
+criticism is welcome. 
+
+You could send me an email (omojolasolomon@gmail). A pull request on would more than excite me!
+
+I managed to host a working instance at http://fibonacci-lms.herokuapp.com.
+
+
+
+Project Structure
+====================
+
+I did not use any framework in developing this application but I tried to structure it like a 
+
+typical MVC application.
+
+Data, logic and presentation are handled in different parts of the projects. I believe this is 
+
+beneficial for the following reasons among others:
+
+> loose coupling, 
+
+> reusability, 
+
+> easy debugging
+
+> overall ease ofcsystem development/implementation
+
+
+
+Files/Directory structure
+============================
+
+The files that made up this project are structured as follows:
+
+
+Project root (library\)
+++++++++++++++++++++++++
+
+Files that make up the model live in the classes\ directory; files that make up the
+
+view live in the pages\ directory while files that make up the controller live in
+
+the scripts\ directory.
+
+The last directory in the root of the project - the helper directory contains some
+
+files with code that is frequently required by the model and controller but not to
+
+the view.
+
+The config.php file is where database connection details are defined as well as
+
+the name of the project.
+
+The index.php file serves as the entry point to the application. it redirects to the
+
+general home page when the URL doesn’t specify any page.
+
+
+classes\
++++++++++
+
+Each file in this directory (except DataModel.php, Reminder.php and Search.php)
+
+contains a PHP class that defines a database table with the properties of these
+
+classes representing table fields in the actual database. Each of these classes
+
+extends a class named DataModel.php (also in the same directory) which is an
+
+abstract class that provides data access methods for each model. Methods
+
+defined in this class enable every table-representing class to perform CRUD
+
+operations on the database. This is an abstraction from regular SQL as it
+
+provides a cleaner and more convenient PHP API for data access from the
+
+controllers(which live in the scripts\ directory).
+
+Reminder.php contains a class from which a reminder object is instantiated for a
+
+given user at a given time.
+
+Search.php contains a class that instantiates a search object from a query string.
+
+The search object contain a result property which is provided to a search result
+
+view through the appropriate controller.
+
+
+helper\
+++++++++
+
+This directory contains files that are useful in most parts of the Model and
+
+Controller, but by themselves do not constitute a model or controller.
+
+admin_logged_in.php: this file contains code to check if the admin is logged in.
+
+This check in frequently required by various parts of the application to
+
+determine permissions and page content that are accessible by the current user.
+
+funtions.php: this file contains functions that are used in some parts of the
+
+application (excluding the view). The decision is a result of refactoring to make
+
+every function used in the project to be accessible in a common location. All
+
+other functions in the application are class methods and can easily be traced to
+
+the classes to which they belong. It is also noteworthy that all classes are in a
+
+common location.
+
+is_logged_in.php: this file contains code that checks if a regular user (student) is
+
+logged in.
+
+retrieve_data.php: this file contains code that is included at different points in the
+
+DataModel class to retrieve data from the database. It is in this file that select
+
+queries are built and executed on the given database.
+
+
+pages\
++++++++
+
+Files pertaining to the View component of the application live in this directory.
+
+There’s an includes\ directory which contains the bootstrap\ directory (where
+
+the bootstrap framework lives) and files that are used by the views including the
+
+template.php file which contains majorly HTML code that defines the layout
+
+common across the entire application; changing the look and feel of the entire
+
+website basically just requires changing the content of this file alone. This is one
+
+of the numerous benefits of the adopted architecture.
+
+Files in the includes\ directory are so classified because none of them actually
+
+constitute a view.
+
+Every other file in the pages directory constitutes a unique view and
+
+corresponds to exactly one URL.
+
+Pages that are only accessible by the admin are prefixed with “admin_” while
+
+pages only accessible by students are prefixed with “user_”. Every other file (with
+
+the exception of the logout.php file which ends up redirecting to the appropriate
+
+login page) are general views that are common to both admin and student and
+
+are accessible even by unregistered visitors.
+
+
+scripts\
++++++++++
+
+This directory contains files that pertain to the controller component of the
+
+application. These files handle user requests and perform the necessary to
+
+generate output.
+
+This directory contains two subdirectories user\ and admin\ which contains
+
+controller for requests unique to students and admin respectively. Other files are
+
+controllers common to students and admin as well as unregistered user as is
+
+with the pages\ directory mentioned above.
+
+Files in the pages directory could also have been further divided into sub
+
+directories, but since a URL router was no implemented and controllers are
+
+accessible by typing the page file location in the browser, the prefixes were used
+
+to avoid too many slashes in the URL.
+
+
+
+How requests are processed
+=============================
+
+When a URL is typed into the browser (e.g. [host
+
+root]/library/pages/index.php), the URL corresponds to a specific file in the
+
+pages\ directory. Each of these files includes its corresponding controller (which
+
+lives in the scripts\ directory) at the top. This implies that code in the controller
+
+is first executed to handle the request and perform all computation required to
+
+generate an output. In this controller, context variables are set to be used when
+
+control is handed over back to the view. The view continues execution after the
+
+controller has finished and uses the set variables to build html for the page
+
+content. Every pages generates its own content as a string and stores it in a
+
+variable called $content. The template.php file is included at the bottom of
+
+every page file. Inside the template.php the $content variable is rendered as
+
+proper HTML with the necessary styling and layout.
+
+Pages titles and page description are also set in the page file and are stored in the
+
+variables $pgTitle and $pgDesc respectively.
+
+
+
+Problems encountered during coding process
+=============================================
+
+Owing to the adopted development pattern, I initially struggled with file inclusion in some parts
+
+of the project. This caused some problems as some files ended up being included
+
+twice thereby resulting in some sort of conflict. An instance of such is when two
+
+data classes are needed to be worked upon in the controller. Each of the classes
+
+includes the DataModel class, so including both data classes would mean that
+
+DataModel would be included twice. This problem was solved by using PHP’s
+
+include_once() function throughout the project.
+
+Implementing the query builder in the DataModel class also posed lots of
+
+challenges, but one bug after the other provided a lot of learning opportunity.
+
+The debugging process made the project all the more interesting.
+
+
+I hope you find this README useful
+
+If you made it this far and bothered to look at my code, please feel free to contact me if you 
+
+have any questions.
